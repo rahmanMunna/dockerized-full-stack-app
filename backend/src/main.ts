@@ -17,6 +17,9 @@ async function bootstrap() {
     credentials: true,
   });
 
+  // Handle SIGTERM/SIGINT (e.g. `docker stop`) so the app closes connections and exits cleanly
+  app.enableShutdownHooks();
+
   await app.listen(process.env.PORT ?? 3001);
 }
 await bootstrap();
