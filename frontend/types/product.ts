@@ -4,3 +4,10 @@ export interface Product {
   price: number;
   qty: number;
 }
+
+export type CreateProductInput = Omit<Product, "id">;
+
+export interface CreateProductResponse {
+  message: string;
+  product: Product;
+}

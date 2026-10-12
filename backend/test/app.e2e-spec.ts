@@ -4,7 +4,7 @@ import request from 'supertest';
 import { App } from 'supertest/types.js';
 import { AppModule } from './../src/app.module.js';
 
-describe('AppController (e2e)', () => {
+describe('ProductController (e2e)', () => {
   let app: INestApplication<App>;
 
   beforeEach(async () => {
@@ -16,11 +16,24 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  it('/product (GET)', async () => {
+    const res = await request(app.getHttpServer()).get('/product').expect(200);
+    expect(res.body).toHaveLength(3);
+  });
+
+  it('/product (POST) adds a product', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/product')
+      .send({ name: 'Keyboard', price: 49.5, qty: 7 })
+      .expect(201);
+
+    expect(res.body).toEqual({
+      message: 'product has been added',
+      product: { id: 4, name: 'Keyboard', price: 49.5, qty: 7 },
+    });
+
+    const list = await request(app.getHttpServer()).get('/product').expect(200);
+    expect(list.body).toContainEqual(res.body.product);
   });
 
   afterEach(async () => {

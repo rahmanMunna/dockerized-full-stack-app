@@ -34,5 +34,16 @@ export function useProducts() {
     setRequestId((id) => id + 1);
   }, []);
 
-  return { ...state, refetch };
+  // Appends a product the server just created, without refetching the list.
+  const addProduct = useCallback((product: Product) => {
+    setState((prev) =>
+      prev.status === "success"
+        ? { ...prev, products: [...prev.products, product] }
+        : prev,
+    );
+  }, []);
+
+  return { ...state, refetch, addProduct };
 }
+
+export type UseProductsResult = ReturnType<typeof useProducts>;

@@ -1,11 +1,7 @@
-"use client";
-
-import { useProducts } from "@/hooks/use-products";
+import type { UseProductsResult } from "@/hooks/use-products";
 import { ProductCard } from "./product-card";
 
-export function ProductList() {
-  const result = useProducts();
-
+export function ProductList({ result }: { result: UseProductsResult }) {
   if (result.status === "loading") {
     return <p className="text-center">Loading products...</p>;
   }
