@@ -70,7 +70,7 @@ export class ProductsController {
     description: 'Returns every product.',
   })
   @ApiOkResponse({ description: 'List of products', type: [Product] })
-  findAll(): Product[] {
+  findAll(): Promise<Product[]> {
     return this.productsService.findAll();
   }
 
@@ -80,7 +80,7 @@ export class ProductsController {
   @ApiOkResponse({ description: 'The product', type: Product })
   @InvalidId()
   @NotFound()
-  findOne(@Param('id', ParseUUIDPipe) id: string): Product {
+  findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Product> {
     return this.productsService.findOne(id);
   }
 
@@ -127,7 +127,7 @@ export class ProductsController {
       error: 'Bad Request',
     },
   })
-  create(@Body() dto: CreateProductDto): Product {
+  create(@Body() dto: CreateProductDto): Promise<Product> {
     return this.productsService.create(dto);
   }
 
@@ -156,7 +156,7 @@ export class ProductsController {
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UpdateProductDto,
-  ): Product {
+  ): Promise<Product> {
     return this.productsService.update(id, dto);
   }
 
