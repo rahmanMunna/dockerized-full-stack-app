@@ -9,7 +9,7 @@ import { ProductsModule } from './modules/products/products.module.js';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
-      inject: [ConfigModule],
+      inject: [ConfigService],
       useFactory: (config:ConfigService) => ({
         type: 'postgres',
         host: config.getOrThrow<string>("DB_HOST"),
