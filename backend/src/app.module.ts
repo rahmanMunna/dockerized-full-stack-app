@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './modules/products/products.module.js';
+import { RedisModule } from './redis/redis.module.js';
 
 @Module({
   imports: [
@@ -22,7 +23,9 @@ import { ProductsModule } from './modules/products/products.module.js';
       })
 
     }),
+    RedisModule,
     ProductsModule,
+    
   ],
   controllers: [],
   providers: [],
